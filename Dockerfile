@@ -5,15 +5,15 @@ LABEL maintainer="The Prometheus Authors <prometheus-developers@googlegroups.com
 
 ARG ARCH="amd64"
 ARG OS="linux"
-COPY .build/${OS}-${ARCH}/prometheus        /bin/prometheus
-COPY .build/${OS}-${ARCH}/promtool          /bin/promtool
+COPY ${OS}-${ARCH}/prometheus        /bin/prometheus
+COPY ${OS}-${ARCH}/promtool          /bin/promtool
+RUN mkdir -p /prometheus
 COPY documentation/examples/prometheus.yml  /prometheus/config/prometheus.yml
 COPY console_libraries/                     /usr/share/prometheus/console_libraries/
 COPY consoles/                              /usr/share/prometheus/consoles/
 
-RUN ln -s /usr/share/prometheus/console_libraries /usr/share/prometheus/consoles/ /etc/prometheus/
-RUN mkdir -p /prometheus && \
-    chown -R nobody:nogroup etc/prometheus /prometheus
+RUN ln -s /usr/share/prometheus/console_libraries /usr/share/prometheus/consoles/ /prometheus/config/
+RUN chown -R nobody:nogroup  /prometheus
 
 USER       nobody
 EXPOSE     9090
