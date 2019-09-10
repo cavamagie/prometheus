@@ -7,7 +7,7 @@ ARG ARCH="amd64"
 ARG OS="linux"
 COPY .build/${OS}-${ARCH}/prometheus        /bin/prometheus
 COPY .build/${OS}-${ARCH}/promtool          /bin/promtool
-COPY documentation/examples/prometheus.yml  /etc/prometheus/prometheus.yml
+COPY documentation/examples/prometheus.yml  /prometheus/config/prometheus.yml
 COPY console_libraries/                     /usr/share/prometheus/console_libraries/
 COPY consoles/                              /usr/share/prometheus/consoles/
 
@@ -20,7 +20,7 @@ EXPOSE     9090
 VOLUME     [ "/prometheus" ]
 WORKDIR    /prometheus
 ENTRYPOINT [ "/bin/prometheus" ]
-CMD        [ "--config.file=/etc/prometheus/prometheus.yml", \
+CMD        [ "--config.file=/prometheus/config/prometheus.yml", \
              "--storage.tsdb.path=/prometheus", \
              "--web.console.libraries=/usr/share/prometheus/console_libraries", \
              "--web.console.templates=/usr/share/prometheus/consoles" ]
