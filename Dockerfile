@@ -1,6 +1,9 @@
 ARG ARCH="amd64"
 ARG OS="linux"
-FROM quay.io/prometheus/busybox-${OS}-${ARCH}:latest
+ARG BASE_IMAGE=alpine:3.10
+FROM ${BASE_IMAGE}
+# test deploy to apline image
+#FROM quay.io/prometheus/busybox-${OS}-${ARCH}:latest
 LABEL maintainer="The Prometheus Authors <prometheus-developers@googlegroups.com>"
 
 ARG ARCH="amd64"
